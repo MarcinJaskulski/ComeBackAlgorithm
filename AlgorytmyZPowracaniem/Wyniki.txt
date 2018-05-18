@@ -1,0 +1,15 @@
+Udało się wylosować, jedziemy dalej 
+Udało się wylosować, jedziemy dalej 
+
+Czesc a
+
+Euler	30%	19
+
+Euler	70%	0
+
+Hamilton	30%	0
+
+Hanilton	70%	0
+
+	661
+
