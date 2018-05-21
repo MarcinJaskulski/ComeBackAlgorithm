@@ -118,25 +118,17 @@ namespace AlgorytmyZPowracaniem
         }
         static void FindHamilton(int i, ref List<int>[] cominglist, ref List<int> solution, ref int[] visited)
         {
-            visited[i] = 1; //oznaczamy, ze dany wierzcholek odwiedzilismy
-                            //foreach(int e in cominglist[i])
-                            //    {
-                            //    Console.Write(e + "->");
-
-
-            //}
-            //Console.Write("\n");
-            //    Console.Read();
-            if ((solution.Count ==visited.Length) && (cominglist[i].Contains(solution[0])))
+            visited[i] = 1;
+            if ((solution.Count ==visited.Length-1) && (cominglist[i].Contains(solution[0])))
             {
-             //   Console.Write("Cykl\n");
+            //   Console.Write("Cykl\n");
                 return; //jeśli istnieje krawędź miedzy i a solution[0] to przerywamy- mamy cykl
 
             }
             if (solution.Count == visited.Length - 1)
             {
                // Console.WriteLine("Sciezka\n");
-                return; //jeśli licznik=n, znaleźliśmy ścieżkę, przerywamy
+             //   return; //jeśli licznik=n, znaleźliśmy ścieżkę
              
             }
             solution.Add(i); //zamiast tablicy stosujemy liste- dodajemy do niej wierzcholek
@@ -186,51 +178,52 @@ namespace AlgorytmyZPowracaniem
             Console.WriteLine("Czesc A\n");
 
             ////Euler
-            //for (int x = 1; x <= 10; x++)
-            //{
-            //     n = x*15; // liczba wierzchołków
-            //    Console.WriteLine("n="+n+"\n");
-            //    int m30 = (n * (n - 1) / 2) * 30 / 100; // ilość krawędzi dla nasycenia 30%
-            //    int[,] adjacencyMatrix30 = new int[n, n]; // macierz sąsiedztwa 30%
-            //    GenerateAdjecencyMatrix(ref adjacencyMatrix30, m30, n); // 30%
+            for (int x = 100; x <= 160; x+=6)
+            {
+                n = x; // liczba wierzchołków
+                Console.WriteLine("n=" + n + "\n");
+                int m30 = (n * (n - 1) / 2) * 30 / 100; // ilość krawędzi dla nasycenia 30%
+                int[,] adjacencyMatrix30 = new int[n, n]; // macierz sąsiedztwa 30%
+                GenerateAdjecencyMatrix(ref adjacencyMatrix30, m30, n); // 30%
 
-            //    int m70 = (n * (n - 1) / 2) * 70 / 100; // ilość krawędzi dla nasycenia 70%
-            //    int[,] adjacencyMatrix70 = new int[n, n]; // macierz sąsiedztwa 70%
-            //    GenerateAdjecencyMatrix(ref adjacencyMatrix70, m70, n); // 70%
+                int m70 = (n * (n - 1) / 2) * 70 / 100; // ilość krawędzi dla nasycenia 70%
+                int[,] adjacencyMatrix70 = new int[n, n]; // macierz sąsiedztwa 70%
+                GenerateAdjecencyMatrix(ref adjacencyMatrix70, m70, n); // 70%
 
 
-            //    // -- Euler --
-            //    List<int>[] commingList30 = new List<int>[n]; // Lista następników
-            //    for (int i = 0; i < n; i++) commingList30[i] = new List<int>(); // inicjowanie obiektu
-            //    TransformToCommingList(ref adjacencyMatrix30, ref commingList30, n); // 30%
+                // -- Euler --
+                List<int>[] commingList30 = new List<int>[n]; // Lista następników
+                for (int i = 0; i < n; i++) commingList30[i] = new List<int>(); // inicjowanie obiektu
+                TransformToCommingList(ref adjacencyMatrix30, ref commingList30, n); // 30%
 
-            //    Console.Write('\n');
+                Console.Write('\n');
 
-            //    List<int>[] commingList70 = new List<int>[n]; // Lista następników
-            //    for (int i = 0; i < n; i++) commingList70[i] = new List<int>(); // inicjowanie obiektu
-            //    TransformToCommingList(ref adjacencyMatrix70, ref commingList70, n); // 70%
+                List<int>[] commingList70 = new List<int>[n]; // Lista następników
+                for (int i = 0; i < n; i++) commingList70[i] = new List<int>(); // inicjowanie obiektu
+                TransformToCommingList(ref adjacencyMatrix70, ref commingList70, n); // 70%
 
-            //    // --- Algorytm szukania ---
-            //    List<int> solution = new List<int>(); // Lista wynikowa
-            //    sw.Start();
+                // --- Algorytm szukania ---
+                List<int> solution = new List<int>(); // Lista wynikowa
+                sw.Start();
 
-            //    FindEuler(0, ref commingList30, ref solution); // funkcja szukająca ciągu Eulera
-            //    sw.Stop();
-            //    Console.WriteLine("Euler\t30%\t" + sw.ElapsedMilliseconds + "\n");
-            //    solution.Clear();
+                FindEuler(0, ref commingList30, ref solution); // funkcja szukająca ciągu Eulera
+                sw.Stop();
+                Console.WriteLine("Euler\t30%\t" + sw.ElapsedMilliseconds + "\n");
+                solution.Clear();
 
-            //    sw.Reset();
-            //    sw.Start();
-            //    FindEuler(0, ref commingList70, ref solution);
-            //    sw.Stop();
-            //    Console.WriteLine("Euler\t70%\t" + sw.ElapsedMilliseconds + "\n");
-            //    solution.Clear();
-            // //   Console.Read();
-            //}
+                sw.Reset();
+                sw.Start();
+                FindEuler(0, ref commingList70, ref solution);
+                sw.Stop();
+                Console.WriteLine("Euler\t70%\t" + sw.ElapsedMilliseconds + "\n");
+                solution.Clear();
+                //   Console.Read();
+            }
             //Hamilton
             for (int x = 1; x <= 10; x++)
             {
-                n = x * 20;
+                n = x*5 ;
+               // n=Console.Read();
                 Console.WriteLine("n=" + n + "\n");
                 int m30 = (n * (n - 1) / 2) * 30 / 100; // ilość krawędzi dla nasycenia 30%
                 int[,] adjacencyMatrix30 = new int[n, n]; // macierz sąsiedztwa 30%
