@@ -236,8 +236,7 @@ namespace AlgorytmyZPowracaniem
             }
             //Hamilton
             bool ham = false;
-            for (int x = 1; x <= 4; x++)
-            {
+       
                 n = 0;
                 n = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("n=" + n + "\n");
@@ -276,35 +275,30 @@ namespace AlgorytmyZPowracaniem
                 Console.WriteLine("Hamilton\t70%\t" + sw.ElapsedMilliseconds + "\n");
                 solution.Clear();
 
-            }
-           // Sprawdzenie Hamiltona w grafie, w którym nie istnieje cykl hamiltona
-            //Console.WriteLine("Czesc B\n");
-            //ham = false;
-            //n = 20;
-            //int m50 = (n * (n - 1) / 2) * 50 / 100; // ilość krawędzi dla nasycenia 50%
-            //int[,] adjacencyMatrix50 = new int[n, n]; // macierz sąsiedztwa 50%
-            //GenerateAdjecencyMatrix(ref adjacencyMatrix50, m50, n); // 50%
-            //DeleteHamiltonFromMatrix(ref adjacencyMatrix50, n); //usuwamy cykl hamiltona z grafu
-            //List<int>[] commingList50_Hamilton = new List<int>[n]; // Lista następników <- dla Kamila
-            //for (int i = 0; i < n; i++) commingList50_Hamilton[i] = new List<int>(); // inicjowanie obiektu
-            //TransformToCommingList(ref adjacencyMatrix50, ref commingList50_Hamilton, n);
-            //int[] Visited = new int[n];
-            //List<int> Solution = new List<int>(); // Lista wynikowa
 
-            //for (int i = 0; i < 20; i++)
-            //{
-            //    for (int j = 0; j < 20; j++)
-            //    {
-            //        Console.Write(adjacencyMatrix50[i, j] + ",");
-            //    }
-            //    Console.Write("\n");
-            //}
-            //Console.Write("\n");
-            //sw.Reset();
-            //sw.Start();
-            //FindHamilton(0, ref commingList50_Hamilton, ref Solution, ref Visited, ref ham);
-            //sw.Stop();
-            //Console.WriteLine("n=" + n + ";Hamilton bez cyklu Hamiltona:" + sw.ElapsedMilliseconds + "\n");
+            // Sprawdzenie Hamiltona w grafie, w którym nie istnieje cykl hamiltona
+            Console.WriteLine("Czesc B\n");
+            ham = false;
+            for (int i = -2; i < 1; i++)
+            {
+                n = 10 + i;
+                int m50 = (n * (n - 1) / 2) * 50 / 100; // ilość krawędzi dla nasycenia 50%
+                int[,] adjacencyMatrix50 = new int[n, n]; // macierz sąsiedztwa 50%
+                GenerateAdjecencyMatrix(ref adjacencyMatrix50, m50, n); // 50%
+                DeleteHamiltonFromMatrix(ref adjacencyMatrix50, n); //usuwamy cykl hamiltona z grafu
+                List<int>[] commingList50_Hamilton = new List<int>[n]; // Lista następników <- dla Kamila
+                for (int j = 0; j < n; j++) commingList50_Hamilton[j] = new List<int>(); // inicjowanie obiektu
+                TransformToCommingList(ref adjacencyMatrix50, ref commingList50_Hamilton, n);
+                int[] Visited = new int[n];
+                List<int> Solution = new List<int>(); // Lista wynikowa
+
+
+                sw.Reset();
+                sw.Start();
+                FindHamilton(0, ref commingList50_Hamilton, ref Solution, ref Visited, ref ham);
+                sw.Stop();
+                Console.WriteLine("n=" + n + ";Hamilton bez cyklu Hamiltona:" + sw.ElapsedMilliseconds + "\n");
+            }
             //Console.SetOut(oldOut);
             //writer.Close();
             //ostrm.Close();
