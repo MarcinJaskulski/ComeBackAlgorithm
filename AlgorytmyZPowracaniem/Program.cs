@@ -176,9 +176,54 @@ namespace AlgorytmyZPowracaniem
    
         }
 
+        static void Hamilton()
+        {
+            Stopwatch sw = new Stopwatch();
+            //Hamilton
+            bool ham = false;
 
+           int n = 0;
+            n = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("n=" + n + "\n");
+            int m30 = (n * (n - 1) / 2) * 30 / 100; // ilość krawędzi dla nasycenia 30%
+            int[,] adjacencyMatrix30 = new int[n, n]; // macierz sąsiedztwa 30%
+            GenerateAdjecencyMatrix(ref adjacencyMatrix30, m30, n); // 30%
+
+            int m70 = (n * (n - 1) / 2) * 70 / 100; // ilość krawędzi dla nasycenia 70%
+            int[,] adjacencyMatrix70 = new int[n, n]; // macierz sąsiedztwa 70%
+            GenerateAdjecencyMatrix(ref adjacencyMatrix70, m70, n); // 70%
+
+
+            List<int>[] commingList30_Hamilton = new List<int>[n]; // Lista następników <- dla Kamila
+            for (int i = 0; i < n; i++) commingList30_Hamilton[i] = new List<int>(); // inicjowanie obiektu
+            TransformToCommingList(ref adjacencyMatrix30, ref commingList30_Hamilton, n); // 30%
+
+
+            List<int>[] commingList70_Hamilton = new List<int>[n]; // Lista następników <- dla Kamila
+            for (int i = 0; i < n; i++) commingList70_Hamilton[i] = new List<int>(); // inicjowanie obiektu
+            TransformToCommingList(ref adjacencyMatrix70, ref commingList70_Hamilton, n); // 30%
+                                                                                          //  tworzenie tablicy visited
+            int[] visited = new int[n];
+            List<int> solution = new List<int>(); // Lista wynikowa
+            sw.Reset();
+            sw.Restart();
+            FindHamilton(0, ref commingList30_Hamilton, ref solution, ref visited, ref ham); // funkcja szukająca ciągu Hamiltona
+            sw.Stop();
+            solution.Clear();
+            Console.WriteLine("Hamilton\t30%\t" + sw.ElapsedMilliseconds + "\n");
+            visited = new int[n];
+            sw.Reset();
+            ham = false;
+            sw.Start();
+            FindHamilton(0, ref commingList70_Hamilton, ref solution, ref visited, ref ham);
+            sw.Stop();
+            Console.WriteLine("Hamilton\t70%\t" + sw.ElapsedMilliseconds + "\n");
+            solution.Clear();
+
+        }
         static void Main(string[] args)
         {
+            
             //kod potrzebny do zapisu outputu konsoli do pliku
             //FileStream ostrm;
             //StreamWriter writer;
@@ -234,51 +279,11 @@ namespace AlgorytmyZPowracaniem
                 solution.Clear();
                 //   Console.Read();
             }
-            //Hamilton
-            bool ham = false;
-       
-                n = 0;
-                n = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("n=" + n + "\n");
-                int m30 = (n * (n - 1) / 2) * 30 / 100; // ilość krawędzi dla nasycenia 30%
-                int[,] adjacencyMatrix30 = new int[n, n]; // macierz sąsiedztwa 30%
-                GenerateAdjecencyMatrix(ref adjacencyMatrix30, m30, n); // 30%
-
-                int m70 = (n * (n - 1) / 2) * 70 / 100; // ilość krawędzi dla nasycenia 70%
-                int[,] adjacencyMatrix70 = new int[n, n]; // macierz sąsiedztwa 70%
-                GenerateAdjecencyMatrix(ref adjacencyMatrix70, m70, n); // 70%
-
-
-                List<int>[] commingList30_Hamilton = new List<int>[n]; // Lista następników <- dla Kamila
-                for (int i = 0; i < n; i++) commingList30_Hamilton[i] = new List<int>(); // inicjowanie obiektu
-                TransformToCommingList(ref adjacencyMatrix30, ref commingList30_Hamilton, n); // 30%
-
-
-                List<int>[] commingList70_Hamilton = new List<int>[n]; // Lista następników <- dla Kamila
-                for (int i = 0; i < n; i++) commingList70_Hamilton[i] = new List<int>(); // inicjowanie obiektu
-                TransformToCommingList(ref adjacencyMatrix70, ref commingList70_Hamilton, n); // 30%
-                                                                                              //  tworzenie tablicy visited
-                int[] visited = new int[n];
-                List<int> solution = new List<int>(); // Lista wynikowa
-                sw.Reset();
-                sw.Restart();
-                FindHamilton(0, ref commingList30_Hamilton, ref solution, ref visited, ref ham); // funkcja szukająca ciągu Hamiltona
-                sw.Stop();
-                solution.Clear();
-                Console.WriteLine("Hamilton\t30%\t" + sw.ElapsedMilliseconds + "\n");
-                visited = new int[n];
-                sw.Reset();
-                ham = false;
-                sw.Start();
-                FindHamilton(0, ref commingList70_Hamilton, ref solution, ref visited, ref ham);
-                sw.Stop();
-                Console.WriteLine("Hamilton\t70%\t" + sw.ElapsedMilliseconds + "\n");
-                solution.Clear();
-
+            Hamilton();
 
             // Sprawdzenie Hamiltona w grafie, w którym nie istnieje cykl hamiltona
             Console.WriteLine("Czesc B\n");
-            ham = false;
+            bool ham = false;
             for (int i = -2; i < 1; i++)
             {
                 n = 10 + i;
